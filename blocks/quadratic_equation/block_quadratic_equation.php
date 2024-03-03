@@ -73,6 +73,12 @@ class block_quadratic_equation extends block_base {
 
         return $this->content;
     }
+
+    // многократный вызов экземпляров на странице
+    public function instance_allow_multiple(){
+        return true;
+    }
+
 }
 
 ////если переменная 'а' передана, то...
