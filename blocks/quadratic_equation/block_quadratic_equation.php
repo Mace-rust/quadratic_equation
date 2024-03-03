@@ -21,7 +21,7 @@ class block_quadratic_equation extends block_base {
         $this->content->text .= '<input type="number" step=any name="a" placeholder="Значение a" required>';
         $this->content->text .= '<input type="number" step=any name="b" placeholder="Значение b" required>';
         $this->content->text .= '<input type="number" step=any name="c" placeholder="Значение c" required>';
-        $this->content->text .= '<input type="submit" value="Решить" >';
+        $this->content->text .= '<input type="submit" value="Решить" style="background-color: #00aa00; color: white;">';
         $this->content->text .= '</form>';
 
         //КНОПКА - История
