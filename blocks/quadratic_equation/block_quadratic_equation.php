@@ -37,16 +37,16 @@ class block_quadratic_equation extends block_base {
 
         $this->content->text = '';
         $this->content->text .= '<form method="post">';
-        $this->content->text .= '<input type="number" name="a" placeholder="Значение a" required>';
-        $this->content->text .= '<input type="number" name="b" placeholder="Значение b" required>';
-        $this->content->text .= '<input type="number" name="c" placeholder="Значение c" required>';
+        $this->content->text .= '<input type="number" step=any name="a" placeholder="Значение a" required>';
+        $this->content->text .= '<input type="number" step=any name="b" placeholder="Значение b" required>';
+        $this->content->text .= '<input type="number" step=any name="c" placeholder="Значение c" required>';
         $this->content->text .= '<input type="submit" value="Решить">';
         $this->content->text .= '</form>';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $a = (int)$_POST['a'];
+            $a = (float)$_POST['a'];
             //optional_param()
-            $b = (int)$_POST['b'];
-            $c = (int)$_POST['c'];
+            $b = (float)$_POST['b'];
+            $c = (float)$_POST['c'];
 
             $discriminant = $b * $b - 4 * $a * $c;
 
