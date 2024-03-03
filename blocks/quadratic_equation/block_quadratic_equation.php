@@ -27,8 +27,7 @@ class block_quadratic_equation extends block_base {
     }
 
     function get_content() {
-        global $DB, $username;
-        //$DB->d
+        global $DB;
 
         if ($this->content !== null) {
             return $this->content;
@@ -72,13 +71,10 @@ class block_quadratic_equation extends block_base {
         $record->c = $c;
         $record->x1 = $x1;
         $record->x2 = $x2;
-        $record->username = $username;
+        //$record->username = $username;
         $record->timestamp = time();
 
         $DB->insert_record('quadratic_equation_history', $record);
-
-// Перенаправление на главную страницу Moodle
-        redirect(new moodle_url('/index.php'));
 
 
         return $this->content;
