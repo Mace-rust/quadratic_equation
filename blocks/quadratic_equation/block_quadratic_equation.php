@@ -27,7 +27,7 @@ class block_quadratic_equation extends block_base {
     }
 
     function get_content() {
-        global $DB;
+        global $DB, $username;
         //$DB->d
 
         if ($this->content !== null) {
@@ -65,7 +65,22 @@ class block_quadratic_equation extends block_base {
                 $this->content->text .= 'Нет корней!';
             }
         }
-        
+
+        $record = new stdClass();
+        $record->a = $a;
+        $record->b = $b;
+        $record->c = $c;
+        $record->x1 = $x1;
+        $record->x2 = $x2;
+        $record->username = $username;
+        $record->timestamp = time();
+
+        $DB->insert_record('quadratic_equation_history', $record);
+
+// Перенаправление на главную страницу Moodle
+        redirect(new moodle_url('/index.php'));
+
+
         return $this->content;
     }
 
