@@ -28,7 +28,7 @@ class block_quadratic_equation extends block_base {
 
     function get_content() {
         global $DB;
-        $DB->d
+        //$DB->d
         if ($this->content !== null) {
             return $this->content;
         }
