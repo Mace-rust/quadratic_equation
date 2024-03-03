@@ -1,15 +1,14 @@
 <?php
+//declare(strict_types=1);
 //
-declare(strict_types=1);
+//require_once(__DIR__ . '/../../config.php');
 //
-require_once(__DIR__ . '/../../config.php');
-echo '123';
 //
 //global $DB;
 //
 //echo '<h1>История:</h1>';
 //
-$entries = $DB->get_records('quadratic_equation_history');
+//$entries = $DB->get_records('mdl_quadratic_equation_history');
 //
 //if (!empty($entries)) {
 //    foreach ($entries as $entry) {
