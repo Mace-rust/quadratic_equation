@@ -29,13 +29,14 @@ class block_quadratic_equation extends block_base {
     function get_content() {
         global $DB;
         //$DB->d
+
         if ($this->content !== null) {
             return $this->content;
         }
 
         $this->content = new stdClass;
 
-        $this->content->text = '';
+        //$this->content->text = '';
         $this->content->text .= '<form method="post">';
         $this->content->text .= '<input type="number" step=any name="a" placeholder="Значение a" required>';
         $this->content->text .= '<input type="number" step=any name="b" placeholder="Значение b" required>';
@@ -48,21 +49,30 @@ class block_quadratic_equation extends block_base {
             $b = (float)$_POST['b'];
             $c = (float)$_POST['c'];
 
-            $discriminant = $b * $b - 4 * $a * $c;
+            if (!empty($a) and !empty($b) and !empty($c)) {
 
-            if ($discriminant < 0) {
-                $this->content->text .= 'Нет корней!';
-            } else {
-                $x1 = (-$b + sqrt($discriminant)) / (2 * $a);
-                $x2 = (-$b - sqrt($discriminant)) / (2 * $a);
-                $this->content->text .= 'x1 = ' . $x1 . '<br>';
-                $this->content->text .= 'x2 = ' . $x2;
+                $discriminant = $b * $b - 4 * $a * $c;
+
+                if ($discriminant > 0) {
+                    $x1 = (-$b + sqrt($discriminant)) / (2 * $a);
+                    $x2 = (-$b - sqrt($discriminant)) / (2 * $a);
+                    $this->content->text .= 'x1 = ' . $x1 . '<br>';
+                    $this->content->text .= 'x2 = ' . $x2;
+                } elseif ($discriminant == 0) {
+                    $x1 = $x2 = (-$b + sqrt($discriminant)) / (2 * $a);
+                    $this->content->text .= "Оба корня равны и имеют значение $x1";
+                } else {
+                    $this->content->text .= 'Нет корней!';
+                }
             }
+// Вывод сообщения об ошибке, если введены нули
+//            else {
+//                $this->content->text .= 'Без нулей!';
+//            }
         }
 
         return $this->content;
     }
-
 }
 
 ////если переменная 'а' передана, то...
