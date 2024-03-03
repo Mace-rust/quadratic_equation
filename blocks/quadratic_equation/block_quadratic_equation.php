@@ -8,7 +8,7 @@ class block_quadratic_equation extends block_base {
     }
 
     function get_content() {
-        global $DB, $record;
+        global $DB, $record, $url, $CFG;
 
         if ($this->content !== null) {
             return $this->content;
@@ -29,6 +29,7 @@ class block_quadratic_equation extends block_base {
 
         if ($a == 0) {
             $this->content->text .= 'Значение a не может быть равно 0';
+            $x1 = $x2 = NULL;
         }
         else {
             $discriminant = $b * $b - 4 * $a * $c;
@@ -43,6 +44,7 @@ class block_quadratic_equation extends block_base {
                 $this->content->text .= "Оба корня равны $x1";
             } else {
                 $this->content->text .= 'Нет корней!';
+                $x1 = $x2 = NULL;
             }
         }
 
@@ -65,19 +67,12 @@ class block_quadratic_equation extends block_base {
         $DB->insert_record('quadratic_equation_history', $record);
 
 
-// Выводим историю решений
-        echo '<h2>История решений квадратного уравнения:</h2>';
-        $history = $DB->get_records('quadratic_equation_history', array(), 'timestamp DESC');
-        if ($history) {
-            echo '<ul>';
-            foreach ($history as $entry) {
-                echo '<li>a='.$entry->a.', b='.$entry->b.', c='.$entry->c.', x1='.$entry->x1.', x2='.$entry->x2.'</li>';
-            }
-            echo '</ul>';
-        } else {
-            echo 'История пуста';
-        }
+        $url = $CFG->wwwroot . '/blocks/quadratic_equation/history.php';
+        $button = '<a class="button" href="' . $url . '" target="_blank" >История</a>';
 
+        $this->content = new stdClass();
+        $this->content->text = $button;
+        $this->content->footer = '';
 
         return $this->content;
     }
