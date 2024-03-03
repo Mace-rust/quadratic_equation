@@ -2,32 +2,13 @@
 
 declare(strict_types=1);
 
-
-
-//$host = 'localhost';  // Хост, у нас все локально
-//$user = 'root';    // Имя созданного вами пользователя
-//$pass = ''; // Установленный вами пароль пользователю
-//$db_name = 'moodlebase';   // Имя базы данных
-//$link = mysqli_connect($host, $user, $pass, $db_name); // Соединяемся с базой
-//
-//// Ругаемся, если соединение установить не удалось
-//if (!$link) {
-//    echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
-//    exit;
-//}
-//
-//$sql = mysqli_query($link, 'SELECT * FROM `quadratic_equation_history`');
-//while ($result = mysqli_fetch_array($sql)) {
-//    echo "{$result['a']}: {$result['b']}<br>";
-//}
-
 class block_quadratic_equation extends block_base {
     function init() {
         $this->title = get_string('pluginname', 'block_quadratic_equation');
     }
 
     function get_content() {
-        global $DB;
+        global $DB, $record;
 
         if ($this->content !== null) {
             return $this->content;
@@ -48,7 +29,6 @@ class block_quadratic_equation extends block_base {
 
         if ($a == 0) {
             $this->content->text .= 'Значение a не может быть равно 0';
-            $x1 = $x2 = 0.0; // NULL записать в БД нельзя => 0.0
         }
         else {
             $discriminant = $b * $b - 4 * $a * $c;
@@ -63,18 +43,23 @@ class block_quadratic_equation extends block_base {
                 $this->content->text .= "Оба корня равны $x1";
             } else {
                 $this->content->text .= 'Нет корней!';
-                $x1 = $x2 = 0.0; // NULL записать в БД нельзя => 0.0
             }
         }
-
 
         $record = new stdClass();
         $record->a = $a;
         $record->b = $b;
         $record->c = $c;
-        $record->x1 = $x1;
-        $record->x2 = $x2;
-        //$record->username = $username;
+
+        if ($x1 !== NULL) {
+            $record->x1 = number_format((float)$x1, 5, '.', '');
+            $record->x2 = number_format((float)$x2, 5, '.', '');
+        }
+        else{
+            $record->x1 = 'NULL';
+            $record->x2 = 'NULL';
+        }
+
         $record->timestamp = time();
 
         $DB->insert_record('quadratic_equation_history', $record);
