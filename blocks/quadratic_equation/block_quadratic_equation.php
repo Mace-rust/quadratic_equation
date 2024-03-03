@@ -41,7 +41,7 @@ class block_quadratic_equation extends block_base {
         $this->content->text .= '<input type="number" step=any name="a" placeholder="Значение a" required>';
         $this->content->text .= '<input type="number" step=any name="b" placeholder="Значение b" required>';
         $this->content->text .= '<input type="number" step=any name="c" placeholder="Значение c" required>';
-        $this->content->text .= '<input type="submit" value="Решить">';
+        $this->content->text .= '<input type="submit" value="Решить" >';
         $this->content->text .= '</form>';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $a = (float)$_POST['a'];
@@ -49,8 +49,10 @@ class block_quadratic_equation extends block_base {
             $b = (float)$_POST['b'];
             $c = (float)$_POST['c'];
 
-            if (!empty($a) and !empty($b) and !empty($c)) {
-
+            if ($a == 0) {
+                $this->content->text .= 'Значение a не может быть равно 0';
+            }
+            else {
                 $discriminant = $b * $b - 4 * $a * $c;
 
                 if ($discriminant > 0) {
@@ -60,7 +62,7 @@ class block_quadratic_equation extends block_base {
                     $this->content->text .= 'x2 = ' . $x2;
                 } elseif ($discriminant == 0) {
                     $x1 = $x2 = (-$b + sqrt($discriminant)) / (2 * $a);
-                    $this->content->text .= "Оба корня равны и имеют значение $x1";
+                    $this->content->text .= "Оба корня равны $x1";
                 } else {
                     $this->content->text .= 'Нет корней!';
                 }
