@@ -48,6 +48,7 @@ class block_quadratic_equation extends block_base {
 
         if ($a == 0) {
             $this->content->text .= 'Значение a не может быть равно 0';
+            $x1 = $x2 = 0.0; // NULL записать в БД нельзя => 0.0
         }
         else {
             $discriminant = $b * $b - 4 * $a * $c;
@@ -62,8 +63,10 @@ class block_quadratic_equation extends block_base {
                 $this->content->text .= "Оба корня равны $x1";
             } else {
                 $this->content->text .= 'Нет корней!';
+                $x1 = $x2 = 0.0; // NULL записать в БД нельзя => 0.0
             }
         }
+
 
         $record = new stdClass();
         $record->a = $a;
