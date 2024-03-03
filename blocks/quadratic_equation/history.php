@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-global $DB;
+
+global $DB, $CFG;
 
 require_once(__DIR__ . '/../../config.php');
 
