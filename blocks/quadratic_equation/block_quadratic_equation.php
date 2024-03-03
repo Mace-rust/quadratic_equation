@@ -16,12 +16,18 @@ class block_quadratic_equation extends block_base {
 
         $this->content = new stdClass;
 
+        //КНОПКА - История
+        $url = $CFG->wwwroot . '/blocks/quadratic_equation/history.php';
+        $button = '<p style="position:absolute;right:0;bottom:0;margin-bottom:0"> '.'<a class="button" href="' . $url . '" target="_blank" >История</a>'.' </p>';
+        $this->content->text .= $button; // КНОПКА - ИСТОРИЯ
+
         $this->content->text .= '<form method="post">';
         $this->content->text .= '<input type="number" step=any name="a" placeholder="Значение a" required>';
         $this->content->text .= '<input type="number" step=any name="b" placeholder="Значение b" required>';
         $this->content->text .= '<input type="number" step=any name="c" placeholder="Значение c" required>';
         $this->content->text .= '<input type="submit" value="Решить" >';
         $this->content->text .= '</form>';
+
 
         $a = optional_param('a', 0, PARAM_FLOAT);
         $b = optional_param('b', 0, PARAM_FLOAT);
@@ -48,6 +54,10 @@ class block_quadratic_equation extends block_base {
             }
         }
 
+
+
+
+
         $record = new stdClass();
         $record->a = $a;
         $record->b = $b;
@@ -67,12 +77,6 @@ class block_quadratic_equation extends block_base {
         $DB->insert_record('quadratic_equation_history', $record);
 
 
-        $url = $CFG->wwwroot . '/blocks/quadratic_equation/history.php';
-        $button = '<a class="button" href="' . $url . '" target="_blank" >История</a>';
-
-        $this->content = new stdClass();
-        $this->content->text = $button;
-        $this->content->footer = '';
 
         return $this->content;
     }
